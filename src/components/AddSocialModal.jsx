@@ -1,6 +1,6 @@
 import React from "react";
 
-const AddSocialModal = () => {
+const AddSocialModal = ({ insertSocialPost }) => {
   return (
     <div>
       <p>Modal for Social</p>

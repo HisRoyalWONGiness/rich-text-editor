@@ -135,6 +135,24 @@ const App = () => {
     }
   };
 
+  const insertSocialPost = (socialPostCode) => {
+    const editor = editorRef.current && editorRef.current.getEditor();
+    if (editor) {
+      const cursorPosition = editor.getSelection(true).index || 0;
+
+      const insertDelta = {
+        ops: [{ insert: socialPostCode }, { insert: "\n" }],
+      };
+
+      editor.clipboard.dangerouslyPasteHTML(
+        cursorPosition,
+        insertDelta.ops[0].insert
+      );
+      editor.setSelection(cursorPosition + 2, "silent");
+      editor.focus();
+    }
+  };
+
   return (
     <div className="h-screen text-gray-700 text-xs overflow-y-auto bg-[#FAFAFA] w-screen">
       <div className="sm:w-4/5 md:w-2/5 sm:mx-auto h-full mx-auto my-14">
@@ -303,7 +321,10 @@ const App = () => {
                       />
                     )}
                     {selectedModal === "social" && (
-                      <AddSocialModal close={closeModal} />
+                      <AddSocialModal
+                        insertSocialPost={insertSocialPost}
+                        close={closeModal}
+                      />
                     )}
                     {/* Add similar blocks for other modals (Video, Social) */}
                   </div>
