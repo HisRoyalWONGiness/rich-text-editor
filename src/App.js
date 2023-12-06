@@ -153,6 +153,20 @@ const App = () => {
     }
   };
 
+  const formats = [
+    "header",
+    "link",
+    "image",
+    "align",
+    "bold",
+    "italic",
+    "list",
+    "bullet",
+    "indent",
+    "video",
+    "iframe",
+  ];
+
   return (
     <div className="h-screen text-gray-700 text-xs overflow-y-auto bg-[#FAFAFA] w-screen">
       <div className="sm:w-4/5 md:w-2/5 sm:mx-auto h-full mx-auto my-14">
@@ -234,7 +248,7 @@ const App = () => {
               modules={{
                 toolbar: false,
               }}
-              formats={["image", "video", "iframe"]}
+              formats={formats}
               bounds={".editor-container"}
               readOnly={false}
             />
