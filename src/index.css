@@ -27,3 +27,9 @@ code {
   heigth: 100% !important;
   /* Add any other styles you need */
 }
+
+.ql-editor p img {
+  display: block;
+  margin: auto;
+  max-width: 100%;
+}

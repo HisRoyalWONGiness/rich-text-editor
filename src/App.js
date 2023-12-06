@@ -95,16 +95,19 @@ const App = () => {
 
       const updatedInsertDelta = {
         ops: [
-          { insert: `<img src="${imageDataUrl}" alt="Inserted Image" />\n` },
+          {
+            insert: `<img style="display: block; margin: auto; max-width: 100%;" src="${imageDataUrl}" alt="Inserted Image" />\n`,
+          },
         ],
       };
-
-      console.log("DELTA", updatedInsertDelta);
 
       editor.clipboard.dangerouslyPasteHTML(
         cursorPosition,
         updatedInsertDelta.ops[0].insert
       );
+
+      editor.clipboard.dangerouslyPasteHTML(cursorPosition + 1, "\n");
+
       editor.setSelection(cursorPosition + 2, "silent");
       editor.focus();
     };
@@ -168,12 +171,12 @@ const App = () => {
   ];
 
   return (
-    <div className="h-screen text-gray-700 text-xs overflow-y-auto bg-[#FAFAFA] w-screen">
-      <div className="sm:w-4/5 md:w-2/5 sm:mx-auto h-full mx-auto my-14">
+    <div className="text-gray-700 text-xs overflow-y-auto bg-[#FAFAFA] w-screen">
+      <div className="sm:w-4/5 md:w-3/5 sm:mx-auto h-full mx-auto my-14">
         <div className="w-full border border-[#E7F1E9] rounded-[4px]">
           <div className="w-full mt-12 h-[1px]" />
 
-          <div className="relative h-[813px] pb-[32px] px-[32px]">
+          <div className="relative h-[713px] pb-[32px] px-[32px]">
             <div className=" mt-[24px] mb-[18px]">
               <input
                 type="text"
@@ -241,7 +244,13 @@ const App = () => {
             <ReactQuill
               ref={editorRef}
               theme="snow"
-              style={{ height: "auto" }}
+              style={{
+                height: "auto",
+                width: "100%",
+                maxHeight: "600px",
+                overflow: "auto",
+                paddingBottom: "50px",
+              }}
               value={editorHtml}
               onChange={handleChange}
               onBlur={handleWordCountLimit}
@@ -346,10 +355,12 @@ const App = () => {
               </div>
             )}
             <div
-              className="absolute z-0 flex items-center justify-end bottom-0 right-0 pr-5 h-10 w-full bg-white"
-              style={{ zIndex: -1 }}
+              className="absolute px-[32px] bg-[#FAFAFA] -bottom-7 right-0 h-10 w-full"
+              style={{ zIndex: 0 }}
             >
-              {wordCount} / 1000 words
+              <div className="bg-white h-full flex w-full items-center justify-end">
+                {wordCount} / 1000 words
+              </div>
             </div>
           </div>
         </div>{" "}
