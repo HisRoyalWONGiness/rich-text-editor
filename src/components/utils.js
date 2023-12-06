@@ -51,12 +51,22 @@ export const handleDropCap = (editorRef) => {
 
 // Function to handle inserting a link
 export const handleInsertLink = (editorRef) => {
-  console.log("CHECK HERE", editorRef);
-  const quill = editorRef.current.getEditor();
+  const quill = editorRef.current && editorRef.current.getEditor();
+
+  if (!quill) {
+    return;
+  }
+
   const url = prompt("Enter the URL:");
 
   if (url) {
-    quill.format("link", url);
+    const cursorPosition = quill.getSelection(true).index || 0;
+
+    const linkHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+
+    quill.clipboard.dangerouslyPasteHTML(cursorPosition, linkHTML);
+    quill.setSelection(cursorPosition + 1, "silent");
+    quill.focus();
   }
 };
 
