@@ -114,16 +114,16 @@ const App = () => {
   };
 
   const insertVideo = (videoCode) => {
-    console.log("IFRAME", videoCode);
     const editor = editorRef.current && editorRef.current.getEditor();
-    console.log("EDITOR", editor);
     if (editor) {
       const cursorPosition = editor.getSelection(true).index || 0;
+
+      const videoHtml = `<div class="ql-video">${videoCode}</div>\n`;
 
       const insertDelta = {
         ops: [
           {
-            insert: videoCode,
+            insert: videoHtml,
           },
           { insert: "\n" },
         ],

@@ -33,3 +33,29 @@ code {
   margin: auto;
   max-width: 100%;
 }
+
+/* Default height for screens smaller than 768px */
+.ql-editor .ql-video {
+  width: 100%;
+  height: 250px; /* Adjust the default height as needed */
+}
+
+/* Media query for screens 768px and larger */
+@media screen and (min-width: 768px) {
+  .ql-editor .ql-video {
+    height: 350px; /* Adjust the height for screens 768px and larger */
+  }
+}
+
+/* Media query for screens 1024px and larger */
+@media screen and (min-width: 1024px) {
+  .ql-editor .ql-video {
+    height: 450px; /* Adjust the height for screens 1024px and larger */
+  }
+}
+
+@media screen and (min-width: 1724px) {
+  .ql-editor .ql-video {
+    height: 550px; /* Adjust the height for screens 1024px and larger */
+  }
+}
