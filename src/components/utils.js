@@ -20,16 +20,22 @@ export const handleItalic = (editorRef) => {
   quill.format("italic", !quill.getFormat().italic);
 };
 
-// Function to handle bulleted list
+// Function to toggle bulleted list
 export const handleBulletedList = (editorRef) => {
   const quill = editorRef.current.getEditor();
-  quill.format("list", "bullet");
+  const currentFormat = quill.getFormat();
+  const isBulletedList = currentFormat.list === "bullet";
+
+  quill.format("list", isBulletedList ? false : "bullet");
 };
 
-// Function to handle numbered list
+// Function to toggle numbered list
 export const handleNumberedList = (editorRef) => {
   const quill = editorRef.current.getEditor();
-  quill.format("list", "ordered");
+  const currentFormat = quill.getFormat();
+  const isNumberedList = currentFormat.list === "ordered";
+
+  quill.format("list", isNumberedList ? false : "ordered");
 };
 
 // Function to handle drop cap
