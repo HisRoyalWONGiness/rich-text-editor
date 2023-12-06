@@ -89,7 +89,7 @@ export const handleInsertImage = (editorRef) => {
 // Function to handle align left
 export const handleAlignLeft = (editorRef) => {
   const quill = editorRef.current.getEditor();
-  quill.format("align", "left");
+  quill.format("align", false);
 };
 
 // Function to handle align right
