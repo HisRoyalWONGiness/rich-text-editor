@@ -104,3 +104,110 @@ export const handleParagraphFormat = (format, editorRef) => {
   // Insert a new paragraph at the current position
   quill.insertText(range.index + 1, "\n", "user");
 };
+
+export const insertImage = async (imageFile, editorRef) => {
+  const editor = editorRef.current && editorRef.current.getEditor();
+  if (!editor || !editor.clipboard) {
+    return;
+  }
+
+  const selection = editor.getSelection(true);
+
+  if (!selection || selection.index === null) {
+    return;
+  }
+
+  const cursorPosition = selection.index;
+
+  // Convert the image to a data URL
+  const imageBlob = await fetch(URL.createObjectURL(imageFile)).then((res) =>
+    res.blob()
+  );
+  const reader = new FileReader();
+  reader.readAsDataURL(imageBlob);
+
+  reader.onloadend = () => {
+    const imageDataUrl = reader.result;
+
+    const updatedInsertDelta = {
+      ops: [
+        {
+          insert: `<img style="display: block; margin: auto; max-width: 100%;" src="${imageDataUrl}" alt="Inserted Image" />\n`,
+        },
+      ],
+    };
+
+    editor.clipboard.dangerouslyPasteHTML(
+      cursorPosition,
+      updatedInsertDelta.ops[0].insert
+    );
+
+    editor.clipboard.dangerouslyPasteHTML(cursorPosition + 1, "\n");
+
+    editor.setSelection(cursorPosition + 2, "silent");
+    editor.focus();
+  };
+};
+
+export const insertVideo = (videoCode, editorRef) => {
+  const editor = editorRef.current && editorRef.current.getEditor();
+  if (editor) {
+    const cursorPosition = editor.getSelection(true).index || 0;
+
+    const videoHtml = `<div class="ql-video">${videoCode}</div>\n`;
+
+    const insertDelta = {
+      ops: [
+        {
+          insert: videoHtml,
+        },
+        { insert: "\n" },
+      ],
+    };
+
+    editor.clipboard.dangerouslyPasteHTML(
+      cursorPosition,
+      insertDelta.ops[0].insert
+    );
+    editor.setSelection(cursorPosition + 2, "silent");
+    editor.focus();
+  }
+};
+
+export const insertSocialPost = (socialPostCode, editorRef) => {
+  const editor = editorRef.current && editorRef.current.getEditor();
+  if (editor) {
+    const cursorPosition = editor.getSelection(true).index || 0;
+
+    const insertDelta = {
+      ops: [{ insert: socialPostCode }, { insert: "\n" }],
+    };
+
+    editor.clipboard.dangerouslyPasteHTML(
+      cursorPosition,
+      insertDelta.ops[0].insert
+    );
+    editor.setSelection(cursorPosition + 2, "silent");
+    editor.focus();
+  }
+};
+
+export const handleWordCountLimit = (wordCount) => {
+  if (wordCount >= 1000) {
+    alert("Word count limit reached (1000 words).");
+  }
+};
+
+export const formats = [
+  "header",
+  "link",
+  "image",
+  "align",
+  "bold",
+  "italic",
+  "list",
+  "bullet",
+  "indent",
+  "video",
+  "iframe",
+];

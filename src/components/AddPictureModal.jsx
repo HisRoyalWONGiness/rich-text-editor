@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 
-const AddPictureModal = ({ close, insertImage }) => {
+const AddPictureModal = ({ close, insertImage, editorRef }) => {
   const [uploadedImage, setUploadedImage] = useState(null);
   const fileInputRef = useRef(null);
 
@@ -42,7 +42,7 @@ const AddPictureModal = ({ close, insertImage }) => {
       <div className="flex gap-5 mt-5 text-base">
         <button
           onClick={() => {
-            insertImage(uploadedImage);
+            insertImage(uploadedImage, editorRef);
             close();
           }}
           className="bg-[#0A7227] text-white h-[35px] w-[78px] font-medium rounded-[4px]"

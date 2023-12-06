@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 import React, { useState } from "react";
 
-const AddVideoModal = ({ close, insertVideo }) => {
+const AddVideoModal = ({ close, insertVideo, editorRef }) => {
   const [videoUrl, setVideoUrl] = useState("");
   const [videoProvider, setVideoProvider] = useState("youtube");
 
@@ -34,7 +34,7 @@ const AddVideoModal = ({ close, insertVideo }) => {
 
     if (embedCode) {
       // Insert the video embed code into the editor
-      insertVideo(embedCode);
+      insertVideo(embedCode, editorRef);
       // Close the modal
       close();
     } else {
